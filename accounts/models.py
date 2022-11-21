@@ -1,6 +1,7 @@
-import email
-from email.policy import default
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
+from datetime import date
 
 # Create your models here.
 GENDER = (
@@ -21,11 +22,18 @@ class Register(models.Model):
         return self.username
 
 
-class Detail(models.Model):
-    first_name = models.CharField(max_length=255, default="")
-    last_name = models.CharField(max_length=255, default="")
-    middle_name = models.CharField(max_length=255, default="")
-    about = models.TextField(max_length=255, default="")
 
+
+
+class User(AbstractUser):
+    pass
     def __str__(self):
-        return self.first_name+" " +self.middle_name+" " +self.last_name
+        return self.username
+
+class Detail(models.Model):
+   user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, default="")
+   title = models.CharField(max_length=200, default="")
+   description = models.CharField(max_length=255, default="")
+
+   def __str__(self):
+    return self.title

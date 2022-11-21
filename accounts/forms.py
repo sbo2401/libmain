@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import *
 from accounts.models import *
 
 class Details(forms.ModelForm):
@@ -51,3 +52,4 @@ class Signin(forms.Form):
             attrs={"placeholder": "Enter Your Password", "id": "password"}
         ),
     )
+

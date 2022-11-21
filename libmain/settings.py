@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "accounts",
+    "rest_framework"
 ]
 
 MIDDLEWARE = [
@@ -138,5 +139,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# AUTH_USER_MODEL = "library_main.User"
+AUTH_USER_MODEL = "accounts.User"
 SESSION_COOKIES_AGE = 604800
