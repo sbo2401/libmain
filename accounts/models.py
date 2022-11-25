@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.conf import settings
-from datetime import date
+
 
 # Create your models here.
 GENDER = (
@@ -31,9 +30,17 @@ class User(AbstractUser):
         return self.username
 
 class Detail(models.Model):
-   user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, default="")
-   title = models.CharField(max_length=200, default="")
-   description = models.CharField(max_length=255, default="")
+    """
+    This is the one for model.py
+    """
+    username = models.ForeignKey(User, on_delete=models.CASCADE, null=False, default="")
+    matricno = models.CharField(max_length=9, default="", primary_key=True)
+    email = models.EmailField(default="")
+    first_name = models.CharField(max_length=200, default="")
+    last_name = models.CharField(max_length=255, default="")
 
-   def __str__(self):
-    return self.title
+    class Meta:
+        verbose_name_plural = "Detail"
+
+    def __str__(self):
+        return self.first_name+ " "+self.last_name

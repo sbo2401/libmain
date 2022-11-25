@@ -9,11 +9,14 @@
 <body>
     <form action="/details/" method="POST">
         {% csrf_token %}
-        {{form.first_name}}
-        {{form.middle_name}}
-        {{form.last_name}}
-        {{form.about}}
-        <input type="submit" value="Create">
+        {% if request.user.is_authenticated %}
+            {{form.username}}
+            {{form.matricno}}
+            {{form.email}}
+            {{form.first_name}}
+            {{form.last_name}}
+            <input type="submit" value="Create">
+        {% endif %}
     </form>
 </body>
 </html>

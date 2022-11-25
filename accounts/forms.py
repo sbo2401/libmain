@@ -6,7 +6,10 @@ class Details(forms.ModelForm):
    class Meta:
     model = Detail
     fields = "__all__"
-
+    widgets={
+        "user": forms.Select()
+    }
+    
 class Register(forms.ModelForm):
     class Meta:
         model = Register 

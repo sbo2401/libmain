@@ -12,5 +12,5 @@ class UserAdmin(UserAdmin):
 
 @admin.register(Detail)
 class Details(admin.ModelAdmin):
-    list_display = ("user",)
+    list_display = ("username",)
 admin.site.register(User ,UserAdmin)
