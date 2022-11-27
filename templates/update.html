@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>details</title>
+</head>
+<body>
+    <form action="/details/" method="POST">
+        {% csrf_token %}
+        {% if request.user.is_authenticated %}
+        <p>
+            {{form.matricno}}
+        </p>
+
+        <p>
+            {{form.email}}
+        </p>
+
+        <p>
+            {{form.first_name}}
+        </p>
+
+        <p>
+            {{form.last_name}}
+        </p>
+
+        <p>
+            <input type="submit" value="Update">
+        </p>
+        {% endif %}
+        <div>
+            <a href="/signout/"><input type="button" value="SignOut"></a>
+        </div>
+    </form>
+</body>
+</html>

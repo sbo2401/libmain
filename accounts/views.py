@@ -28,7 +28,7 @@ def details(request):
     return render(request, "details.html", {"form":form})
 
 def updatedetails(request, pk):
-    detail = Detail.objects.get(matricno=pk)
+    detail = Detail.objects.get(id=pk)
     form = Details(instance=detail)
     if request.method == "POST":
         form = Details(request.POST, instance=detail)
