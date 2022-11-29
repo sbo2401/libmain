@@ -13,7 +13,7 @@ class Detail(models.Model):
     This is the one for model.py
     """
     username = models.ForeignKey(User, on_delete=models.CASCADE, null=True, default="")
-    matricno = models.CharField(max_length=9, default="")
+    matricno = models.CharField(max_length=9, default="", primary_key=True)
     email = models.EmailField(default="")
     first_name = models.CharField(max_length=200, default="")
     last_name = models.CharField(max_length=255, default="")

@@ -10,6 +10,9 @@ from django.shortcuts import get_object_or_404
 User =get_user_model()
 # Create your views here.
 
+def index(request):
+    return render(request, "index.html", {})
+
 def success(request,pk):
     return render(request, "success.html", {"pk":pk})
 
@@ -28,14 +31,14 @@ def details(request):
     return render(request, "details.html", {"form":form})
 
 def updatedetails(request, pk):
-    detail = Detail.objects.get(id=pk)
+    detail = Detail.objects.get(matricno=pk)
     form = Details(instance=detail)
     if request.method == "POST":
         form = Details(request.POST, instance=detail)
         if form.is_valid():
             form.save()
             return redirect(success, pk=detail.pk)
-    return render(request, "details.html", {"form":form})
+    return render(request, "update.html", {"form":form})
 
 def signup(request):
     if request.method == "POST":
@@ -78,7 +81,7 @@ def signin(request):
                     return redirect(signin)
                 else:
                     login(request, get_user[0])
-                    return redirect(details)
+                    return redirect(index)
             else:
                 messages.error(request, "User does not exist")
                 return redirect(signin)
@@ -88,4 +91,4 @@ def signin(request):
 
 def signout(request):
     logout(request)
-    return redirect(signin)
+    return redirect(index)
