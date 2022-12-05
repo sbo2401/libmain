@@ -10,7 +10,7 @@ class UserAdmin(UserAdmin):
     model = User
     list_display=["username", "email", "first_name", "last_name", "is_superuser","is_active","is_staff",]
 
-@admin.register(Detail)
+@admin.register(UserProfile)
 class Details(admin.ModelAdmin):
     list_display = ("username",)
 admin.site.register(User ,UserAdmin)

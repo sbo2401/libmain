@@ -18,9 +18,10 @@ def success(request,pk):
 
 @login_required(login_url="signin")
 def details(request):
+    # user = User.objects.get(username=username)
     form = Details()
     if request.method == "POST":
-        form = Details(request.POST)
+        form = Details(request.POST, request.FILES)
         if form.is_valid():
             detail = form.save(commit=False)
             detail.username = request.user
@@ -31,10 +32,10 @@ def details(request):
     return render(request, "details.html", {"form":form})
 
 def updatedetails(request, pk):
-    detail = Detail.objects.get(matricno=pk)
+    detail = UserProfile.objects.get(matricno=pk)
     form = Details(instance=detail)
     if request.method == "POST":
-        form = Details(request.POST, instance=detail)
+        form = Details(request.POST, request.FILES, instance=detail,)
         if form.is_valid():
             form.save()
             return redirect(success, pk=detail.pk)

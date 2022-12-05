@@ -5,12 +5,21 @@ from django.contrib.auth import get_user_model
 User =get_user_model()
 
 class Details(forms.ModelForm):
-   class Meta:
-    model = Detail
-    exclude = ["username"]
-    widgets={
-        "matricno": forms.TextInput(attrs={"readonly":"readonly"})
-    }
+    class Meta:
+        model = UserProfile
+        exclude = ["username"]
+        widget = {"matricno":forms.TextInput(attrs={"readonly":"readonly"})}
+    
+    def clean(self):
+        super(Details, self).clean()
+        email = self.cleaned_data.get("email")
+        profile_picture = self.cleaned_data.get("profile_picture", False)
+        if profile_picture:
+            if profile_picture.size > 4000000:
+                self.errors[""] = self.error_class(["Picture larger than 4MB"])
+        return self.cleaned_data
+
+
 
 
 class Signup(forms.Form):
@@ -69,3 +78,4 @@ class Signin(forms.Form):
             attrs={"placeholder": "Enter Your Password", "id": "password"}
         ),
     )
+

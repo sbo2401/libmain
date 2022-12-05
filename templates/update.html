@@ -7,7 +7,7 @@
     <title>details</title>
 </head>
 <body>
-    <form action="{% url 'updatedetails' pk=form.instance.pk %}" method="POST">
+    <form action="{% url 'updatedetails' pk=form.instance.pk %}" method="POST" enctype='multipart/form-data'>
         {% csrf_token %}
         {% if request.user.is_authenticated %}
         <p>
@@ -27,12 +27,17 @@
         </p>
 
         <p>
+            {{form.profile_picture}}
+        </p>
+
+        <p>
             <input type="submit" value="Update">
         </p>
-        {% endif %}
+
         <div>
             <a href="/signout/"><input type="button" value="SignOut"></a>
         </div>
+        {% endif %}
     </form>
 </body>
 </html>
