@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Books</title>
+</head>
+<body>
+    <form action="/books/" method="POST" enctype='multipart/form-data'>
+        {% csrf_token %}
+        {% if request.user.is_authenticated %}
+        {% comment %} <p>
+            {{form.book_title}}
+        </p> {% endcomment %}
+
+        <p>
+            {{form.book_author}}
+        </p>
+
+        <p>
+            {{form.publication_year}}
+        </p>
+
+        <p>
+            {{form.isbn}}
+        </p>
+
+        <p>
+            {{form.book}}
+        </p>
+
+        <p>
+            <input type="submit" value="Create">
+        </p>
+
+        <div>
+            <a href="/signout/"><input type="button" value="SignOut"></a>
+        </div>
+        
+        <p>
+            {{form.errors}}
+        </p>
+        {% endif %}
+    </form>
+</body>
+</html>

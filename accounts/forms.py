@@ -8,7 +8,9 @@ class Details(forms.ModelForm):
     class Meta:
         model = UserProfile
         exclude = ["username"]
-        widget = {"matricno":forms.TextInput(attrs={"readonly":"readonly"})}
+        widgets = {
+            "matricno":forms.TextInput(attrs={"readonly":True})
+        }
     
     def clean(self):
         super(Details, self).clean()
@@ -19,7 +21,23 @@ class Details(forms.ModelForm):
                 self.errors[""] = self.error_class(["Picture larger than 4MB"])
         return self.cleaned_data
 
+class Book(forms.ModelForm):
+    class Meta:
+        model = Books
+        exclude = ["book_title"]
+        widgets = {
+            "book_title":forms.TextInput(attrs={"placeholder":"How"}),
+            "book":forms.ClearableFileInput(attrs={"multiple":True})
+        }
 
+    def clean(self):
+        super(Book, self).clean()
+        book_title = self.cleaned_data.get("book_title")
+        
+        for instance in Books.objects.all():
+            if instance.book_title == book_title:
+                self.errors[""] = self.error_class(["Book already exist"])
+        return self.cleaned_data
 
 
 class Signup(forms.Form):

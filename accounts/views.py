@@ -13,34 +13,6 @@ User =get_user_model()
 def index(request):
     return render(request, "index.html", {})
 
-def success(request,pk):
-    return render(request, "success.html", {"pk":pk})
-
-@login_required(login_url="signin")
-def details(request):
-    # user = User.objects.get(username=username)
-    form = Details()
-    if request.method == "POST":
-        form = Details(request.POST, request.FILES)
-        if form.is_valid():
-            detail = form.save(commit=False)
-            detail.username = request.user
-            detail.save()
-            return redirect(success, pk=detail.pk)
-    else:
-        form = Details(initial={"matricno":request.user.username})
-    return render(request, "details.html", {"form":form})
-
-def updatedetails(request, pk):
-    detail = UserProfile.objects.get(matricno=pk)
-    form = Details(instance=detail)
-    if request.method == "POST":
-        form = Details(request.POST, request.FILES, instance=detail,)
-        if form.is_valid():
-            form.save()
-            return redirect(success, pk=detail.pk)
-    return render(request, "update.html", {"form":form})
-
 def signup(request):
     if request.method == "POST":
         form = Signup(request.POST)
@@ -58,15 +30,14 @@ def signup(request):
             user.save()
             login(request, user)
             messages.success(request, "Account Created successfully for " + username)
-            return redirect(details)
+            return redirect(index)
     else:
         form = Signup()
     return render(request, "accounts/register.html", {"form": form})
 
-
 def signin(request):
     if request.user.is_authenticated:
-        return redirect(details)
+        return redirect(index)
     if request.method == "POST":
         form = Signin(request.POST)
         if form.is_valid():
@@ -93,3 +64,57 @@ def signin(request):
 def signout(request):
     logout(request)
     return redirect(index)
+
+@login_required(login_url="signin")
+def details(request):
+    # if request.user.is_authenticated and request.user.is_superuser:
+    #     return redirect(index)
+    form = Details()
+    if request.method == "POST":
+        form = Details(request.POST, request.FILES)
+        if form.is_valid():
+            detail = form.save(commit=False)
+            detail.username = request.user
+            detail.save()
+            return redirect(success, pk=detail.pk)
+    else:
+        form = Details(initial={"matricno":request.user.username})
+    return render(request, "details.html", {"form":form})
+
+def success(request,pk):
+    # if request.user.is_authenticated and request.user.is_superuser:
+    #     return redirect(index)
+    # else:
+        return render(request, "success.html", {"pk":pk})
+
+def updatedetails(request, pk):
+    # if request.user.is_authenticated and request.user.is_superuser:
+    #     return redirect(index)
+    detail = UserProfile.objects.get(matricno=pk)
+    form = Details(instance=detail)
+    if request.method == "POST":
+        form = Details(request.POST, request.FILES, instance=detail,)
+        if form.is_valid():
+            form.save()
+            return redirect(success, pk=detail.pk)
+    return render(request, "update.html", {"form":form})
+
+def books(request):
+    form = Book()
+    if request.method == "POST":
+        form = Book(request.POST, request.FILES)
+        # file = request.FILES["book"]
+        files = request.FILES.getlist("book")
+        if form.is_valid():
+            for f in files:
+                names = str(f)
+                name = names.strip(".pdf")
+                file = Books(book=f, book_title=name)
+                file.save()
+            # book = form.save(commit=False)
+            # book.book_title = str(files)
+            # book.save()
+            return redirect(index)
+    else:
+        form = Book()
+    return render(request, "books.html", {"form":form})

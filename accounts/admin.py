@@ -14,3 +14,4 @@ class UserAdmin(UserAdmin):
 class Details(admin.ModelAdmin):
     list_display = ("username",)
 admin.site.register(User ,UserAdmin)
+admin.site.register(Books)
