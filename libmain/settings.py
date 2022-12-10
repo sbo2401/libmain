@@ -14,7 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-MEDIA_ROOT = "/home/dubsy/virtualenvs/djangoproject/libmain" 
+MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
 
 # Quick-start development settings - unsuitable for production
@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "accounts",
-    "rest_framework"
+    "rest_framework",
+    # "django-extensions"
 ]
 
 MIDDLEWARE = [

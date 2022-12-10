@@ -10,37 +10,30 @@
     <form action="/books/" method="POST" enctype='multipart/form-data'>
         {% csrf_token %}
         {% if request.user.is_authenticated %}
-        {% comment %} <p>
-            {{form.book_title}}
-        </p> {% endcomment %}
+            
+            <p>
+                {{form.book}}
+            </p>
 
-        <p>
-            {{form.book_author}}
-        </p>
+            <p>
+                {{form.collections}}
+            </p>
 
-        <p>
-            {{form.publication_year}}
-        </p>
+            <p>
+                <input type="submit" value="Create">
+            </p>
 
-        <p>
-            {{form.isbn}}
-        </p>
+            <div>
+                <a href="/signout/"><input type="button" value="SignOut"></a>
+            </div>
+            
+            <p>
+                {{form.errors}}
+            </p>
 
-        <p>
-            {{form.book}}
-        </p>
-
-        <p>
-            <input type="submit" value="Create">
-        </p>
-
-        <div>
-            <a href="/signout/"><input type="button" value="SignOut"></a>
-        </div>
-        
-        <p>
-            {{form.errors}}
-        </p>
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
         {% endif %}
     </form>
 </body>

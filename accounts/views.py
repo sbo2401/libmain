@@ -6,7 +6,9 @@ from django.contrib import messages, auth
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-
+from django.template import loader
+from django.http import HttpResponse
+from django.db import IntegrityError
 User =get_user_model()
 # Create your views here.
 
@@ -100,21 +102,29 @@ def updatedetails(request, pk):
     return render(request, "update.html", {"form":form})
 
 def books(request):
-    form = Book()
     if request.method == "POST":
-        form = Book(request.POST, request.FILES)
-        # file = request.FILES["book"]
+        form = BookFile(request.POST, request.FILES)
         files = request.FILES.getlist("book")
-        if form.is_valid():
-            for f in files:
-                names = str(f)
-                name = names.strip(".pdf")
-                file = Books(book=f, book_title=name)
-                file.save()
-            # book = form.save(commit=False)
-            # book.book_title = str(files)
-            # book.save()
-            return redirect(index)
+        try:
+            if form.is_valid():
+                collection = form.save(commit=False)
+                collection.save()
+                if files:
+                    for f in files:
+                        names = str(f)
+                        name = names.strip(".pdf")
+                        Books.objects.create(collection=collection, book_title=name, book=f)
+                return redirect(index)
+        except IntegrityError:
+            messages.error(request, "value exist in database")
+            return redirect(books)
     else:
-        form = Book()
+        form = BookFile()
     return render(request, "books.html", {"form":form})
+
+
+def test(request):
+    data = Books.objects.filter(collection="FICTION")
+    template = loader.get_template('test.html')
+    context = {"data":data}
+    return HttpResponse(template.render(context, request))
