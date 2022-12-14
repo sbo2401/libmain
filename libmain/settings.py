@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "accounts",
     "rest_framework",
-    # "django-extensions"
+    'django_extensions'
 ]
 
 MIDDLEWARE = [
@@ -144,3 +144,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.User"
 SESSION_COOKIES_AGE = 600
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}

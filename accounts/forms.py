@@ -2,63 +2,58 @@ from django import forms
 from django.contrib.auth.forms import *
 from accounts.models import *
 from django.contrib.auth import get_user_model
-User =get_user_model()
 
-class Details(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        exclude = ["username"]
-        widgets = {
-            "matricno":forms.TextInput(attrs={"readonly":True})
-        }
-    
-    def clean(self):
-        super(Details, self).clean()
-        email = self.cleaned_data.get("email")
-        profile_picture = self.cleaned_data.get("profile_picture", False)
-        if profile_picture:
-            if profile_picture.size > 4000000:
-                self.errors[""] = self.error_class(["Picture larger than 4MB"])
-        return self.cleaned_data
+User = get_user_model()
+
+
+# class Details(forms.ModelForm):
+#     class Meta:
+#         model = UserProfile
+#         exclude = ["username"]
+#         widgets = {"matricno": forms.TextInput(attrs={"readonly": True})}
+
+#     def clean(self):
+#         super(Details, self).clean()
+#         email = self.cleaned_data.get("email")
+#         profile_picture = self.cleaned_data.get("profile_picture", False)
+#         if profile_picture:
+#             if profile_picture.size > 4000000:
+#                 self.errors[""] = self.error_class(["Picture larger than 4MB"])
+#         return self.cleaned_data
+
 
 class BookInfo(forms.ModelForm):
     class Meta:
-        model = BookDetails
-        fields = ["collections",]
+        model = Genre
+        fields = [
+            "genres",
+        ]
+        widgets = {"genres": forms.TextInput(attrs={"list": "genres"})}
+
 
 class BookFile(BookInfo):
-    """
-    To Upload
-    """
-    book = forms.FileField(widget = forms.ClearableFileInput(attrs={"multiple":True}))
+    book = forms.FileField(widget=forms.ClearableFileInput(attrs={"multiple": True}))
+
     class Meta(BookInfo.Meta):
-        fields = BookInfo.Meta.fields + ["book",]
+        fields = BookInfo.Meta.fields + [
+            "book",
+        ]
 
-class Signup(forms.Form):
-    username = forms.CharField(
-        max_length=9,
-        widget=forms.TextInput(attrs={"placeholder": "Enter Your Matric Number"}),
-    )
 
-    email = forms.EmailField(
-        max_length=255,
-        widget=forms.EmailInput(attrs={"placeholder": "Enter Your E-mail Address"}),
-    )
+class Signup(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["username", "email", "password", "password2", "profile_picture"]
+        help_texts = {
+            "username":None
+        }
+        widgets = {
+            "username": forms.TextInput(),
+            "password": forms.PasswordInput(),
+            "password2": forms.PasswordInput(attrs={"required": True}),
+        }
 
-    password = forms.CharField(
-        max_length=255,
-        widget=forms.PasswordInput(
-            attrs={"placeholder": "Enter Your Password", "id": "password"}
-        ),
-    )
 
-    password2 = forms.CharField(
-        max_length=255,
-        widget=forms.PasswordInput(
-            attrs={"placeholder": "Confirm Your Password", "id": "password2"}
-        ),
-    )
-    
     def clean(self):
         super(Signup, self).clean()
         password = self.cleaned_data.get("password")
@@ -79,6 +74,7 @@ class Signup(forms.Form):
 
         return self.cleaned_data
 
+
 class Signin(forms.Form):
     username = forms.CharField(
         max_length=9,
@@ -90,4 +86,3 @@ class Signin(forms.Form):
             attrs={"placeholder": "Enter Your Password", "id": "password"}
         ),
     )
-

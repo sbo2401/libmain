@@ -16,7 +16,14 @@
             </p>
 
             <p>
-                {{form.collections}}
+                {{form.genres}}
+                <datalist id="genres">
+                    <select name="" id="">
+                        {% for name in genres_names %}
+                        <option value="{{name.genres}}">{{name.genres}}</option>
+                        {% endfor %}
+                    </select>
+                </datalist>
             </p>
 
             <p>
