@@ -26,19 +26,31 @@ def signup(request):
             email = request.POST["email"]
             password = request.POST["password"]
             password2 = request.POST["password2"]
-            profile_picture = request.FILES["profile_picture"]
+            avatar = request.FILES["avatar"]
 
-            user = User.objects.create_user(
-                username=username,
-                password=password,
-                email=email,
-                profile_picture=profile_picture
-                
-            )
-            user.save()
-            login(request, user)
-            messages.success(request, "Account Created successfully for " + username)
-            return redirect(index)
+            if "@yahoo.com" or "@ymail.com" in email:
+                user = User.objects.create_user(
+                    username=username,
+                    password=password,
+                    email=email,
+                    avatar=avatar
+                    
+                )
+                user.save()
+                login(request, user)
+                messages.success(request, "Account Created successfully for " + username)
+                return redirect(index)
+            else:
+                user = User.objects.create_user(
+                    username=username,
+                    password=password,
+                    email=email.lower(),
+                    avatar=avatar
+                )
+                user.save()
+                login(request, user)
+                messages.success(request, "Account Created successfully for " + username)
+                return redirect(index)
     else:
         form = Signup()
     return render(request, "accounts/register.html", {"form": form})
@@ -152,3 +164,14 @@ def test(request):
 
 def test1(request):
     return render(request, "test1.html", {})
+
+def uploadedby(request):
+    if request.method == "POST":
+        form = Upload(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(index)
+    else:
+        form = Upload()
+    return render(request, "accounts/upload.html", {"form":form})
+

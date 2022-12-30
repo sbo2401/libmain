@@ -8,7 +8,7 @@
   <title>Mentor Bootstrap Template - Index</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-
+  
   <!-- Favicons -->
   <link href="/static/img/favicon.png" rel="icon">
   <link href="/static/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -37,6 +37,7 @@
 </head>
 
 <body>
+  <script src="/static/js/script.js"></script>
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top">
@@ -49,7 +50,7 @@
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="/static/img/logo.png" alt="" class="img-fluid"></a> -->
 
-      <nav id="navbar" class="navbar order-last order-lg-0">
+      <nav id="navbar" class="navbar order-last order-lg-0 header__menu">
         <ul>
           <li><a href="/">Home</a></li>
           {% if request.user.is_superuser %}
@@ -59,8 +60,9 @@
           <li><a href="#">Trainers</a></li>
           <li><a href="#">Events</a></li>
           <li><a href="#">Pricing</a></li>
+          <li><a href="#">Contact</a></li>
 
-          <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+          <!-- <li class="dropdown"><a href=""><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
               <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
@@ -76,8 +78,30 @@
               <li><a href="#">Drop Down 3</a></li>
               <li><a href="#">Drop Down 4</a></li>
             </ul>
-          </li>
-          {% if request.user.is_authenticated %}
+          </li> -->
+   
+        {% if request.user.is_authenticated %}
+          <div class="header__user">
+            <div class="avatar avatar--medium active">
+              <img src="{{request.user.avatar.url}}" />
+            </div>
+            <p>{{request.user.username}}</p>
+            <button class="dropdown-button">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                <path d="M16 21l-13-13h-3l16 16 16-16h-3l-13 13z"></path>
+              </svg>
+            </button>
+          </div>
+        {% else %}
+          <a href="/signin/">
+            <img src="/media/avatar.svg" />
+              <p>Login</p>
+          </a>
+        {% endif %}
+        <div class="dropdown-menu">
+          <a href="/signout/" class="dropdown-link">Signout</a>
+      
+          <!-- {% if request.user.is_authenticated %}
             <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
               <ul>
                 {% if request.user.is_superuser %}
@@ -87,16 +111,11 @@
                 {% endif %}
               </ul>
             </li>
-          {% endif %}
-          <li><a href="#">Contact</a></li>
+          {% endif %} -->
+         
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-      {% if request.user.is_authenticated %}
-        <a href="/signout/" class="get-started-btn">SignOut</a>
-      {% else %}
-        <a href="/signin/" class="get-started-btn">SignIn</a>
-      {% endif %}
 
     </div>
   </header><!-- End Header -->

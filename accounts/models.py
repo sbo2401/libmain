@@ -26,34 +26,18 @@ def validate_book_extension(value):
 
 
 class User(AbstractUser):
-    profile_picture = models.ImageField(
+    username = models.CharField(max_length=9, default="", verbose_name="User Id", unique=True) 
+    avatar = models.ImageField(
         blank=True,
         null=True,
-        default="",
+        default="avatar.svg",
         upload_to="images",
         validators=[validate_pic_extension],
     )
     password2 = models.CharField(default="", max_length=128, verbose_name="Confirm Password", null=True, blank=True)
+
     def __str__(self):
         return self.username
-
-
-# class UserProfile(models.Model):
-#     """
-#     This is the one for model.py
-#     """
-
-#     username = models.ForeignKey(User, on_delete=models.CASCADE, null=True, default="")
-#     matricno = models.CharField(max_length=9, default="", primary_key=True)
-#     email = models.EmailField(default="")
-#     first_name = models.CharField(max_length=200, default="")
-#     last_name = models.CharField(max_length=255, default="")
-
-#     class Meta:
-#         verbose_name_plural = "Users Profile"
-
-#     def __str__(self):
-#         return self.first_name + " " + self.last_name
 
 
 class Catalog(models.Model):
@@ -73,13 +57,13 @@ class Genre(models.Model):
     def __str__(self):
         return self.genres
 
-
+ 
 class Books(models.Model):
-    """
-    This is for models.py
-    """
-
-    book_title = models.CharField(max_length=255, default="", primary_key=True)
+    title = models.CharField(max_length=500, default="")
+    author = models.CharField(max_length=500, default="")
+    publication = models.CharField(max_length=500, default="")
+    edition = models.IntegerField(default="")
+    is_available = models.BooleanField()
     book = models.FileField(
         default="",
         upload_to="books",
@@ -92,4 +76,23 @@ class Books(models.Model):
         verbose_name_plural = "Books"
 
     def __str__(self):
-        return self.book_title
+        return self.title
+
+class BorrowedBook(models.Model):
+    member = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Books, on_delete=models.CASCADE)
+    borrow_date = models.DateTimeField()
+    return_date = models.DateTimeField()
+    is_returned = models.BooleanField()
+
+class WhoUpload(models.Model):
+    file = models.FileField(
+        default="",
+        upload_to="books",
+        validators=[validate_book_extension],
+        verbose_name="books",
+    )
+    uploaded_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+
+    # def __str__(self):
+    #     return self.uploaded_by

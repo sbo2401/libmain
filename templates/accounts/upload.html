@@ -7,23 +7,23 @@
     <title>Upload Books</title>
 </head>
 <body>
-    <form action="/books/" method="POST" enctype='multipart/form-data'>
+    <form action="/uploadedby/" method="POST" enctype='multipart/form-data'>
         {% csrf_token %}
         {% if request.user.is_authenticated %}
             
             <p> 
-                {{form.book}}
+                {{form.file}}
             </p>
 
             <p>
-                {{form.genres}}
-                <datalist id="genres">
+                {{form.uploaded_by}}
+                {% comment %} <datalist id="genres">
                     <select name="" id="">
                         {% for name in genres_names %}
                         <option value="{{name.genres}}">{{name.genres}}</option>
                         {% endfor %}
                     </select>
-                </datalist>
+                </datalist> {% endcomment %}
             </p>
 
             <p>

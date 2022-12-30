@@ -143,7 +143,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 AUTH_USER_MODEL = "accounts.User"
-SESSION_COOKIES_AGE = 600
+# SESSION_COOKIES_AGE = 600
 
 GRAPH_MODELS = {
   'all_applications': True,

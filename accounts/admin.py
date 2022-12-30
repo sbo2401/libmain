@@ -28,3 +28,4 @@ class BookAdmin(admin.ModelAdmin):
 admin.site.register(Books, BookAdmin)
 admin.site.register(Catalog)
 admin.site.register(Collection)
+admin.site.register(WhoUpload)

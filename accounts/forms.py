@@ -15,10 +15,8 @@ User = get_user_model()
 #     def clean(self):
 #         super(Details, self).clean()
 #         email = self.cleaned_data.get("email")
-#         profile_picture = self.cleaned_data.get("profile_picture", False)
-#         if profile_picture:
-#             if profile_picture.size > 4000000:
-#                 self.errors[""] = self.error_class(["Picture larger than 4MB"])
+        
+        
 #         return self.cleaned_data
 
 
@@ -32,7 +30,7 @@ class BookInfo(forms.ModelForm):
 
 
 class BookFile(BookInfo):
-    book = forms.FileField(widget=forms.ClearableFileInput(attrs={"multiple": True}))
+    book = forms.FileField(widget=forms.ClearableFileInput(attrs={"multiple": True, "id":"books"}))
 
     class Meta(BookInfo.Meta):
         fields = BookInfo.Meta.fields + [
@@ -43,11 +41,16 @@ class BookFile(BookInfo):
 class Signup(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["username", "email", "password", "password2", "profile_picture"]
+        fields = ["username", "email", "password", "password2", "avatar"]
         help_texts = {
-            "username":None
+            "username":None,
+            "avatar": "Max file size is 4MB"
+        }
+        labels = {
+            "avatar":"Profile Picture"
         }
         widgets = {
+            "avatar":forms.ClearableFileInput(attrs={"required":False}),
             "username": forms.TextInput(),
             "password": forms.PasswordInput(),
             "password2": forms.PasswordInput(attrs={"required": True}),
@@ -60,10 +63,13 @@ class Signup(forms.ModelForm):
         password2 = self.cleaned_data.get("password2")
         username = self.cleaned_data.get("username")
         email = self.cleaned_data.get("email")
+        avatar = self.cleaned_data.get("avatar", False)
 
         if password != password2:
             self.errors[""] = self.error_class(["The two password fields must match"])
-
+        elif avatar:
+            if avatar.size > 4000000:
+                self.errors[""] = self.error_class(["Picture larger than 4MB"])
         for instance in User.objects.all():
             if instance.username == str(username):
                 self.errors[""] = self.error_class(["User already exist"])
@@ -86,3 +92,8 @@ class Signin(forms.Form):
             attrs={"placeholder": "Enter Your Password", "id": "password"}
         ),
     )
+
+class Upload(forms.ModelForm):
+    class Meta:
+        model = WhoUpload
+        exclude = ["uploaded_by"]
