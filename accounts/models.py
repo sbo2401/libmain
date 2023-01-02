@@ -77,22 +77,15 @@ class Books(models.Model):
 
     def __str__(self):
         return self.title
+class BorrowBook(models.Model):
+    member = models.ForeignKey(User, on_delete=models.CASCADE, default="")
+    book = models.ForeignKey(Books, on_delete=models.CASCADE, default="")
+
 
 class BorrowedBook(models.Model):
-    member = models.ForeignKey(User, on_delete=models.CASCADE)
-    book = models.ForeignKey(Books, on_delete=models.CASCADE)
+    member = models.ForeignKey(User, on_delete=models.SET_NULL, default="", null=True)
+    book = models.ForeignKey(Books, on_delete=models.SET_NULL, null=True, default="")
     borrow_date = models.DateTimeField()
     return_date = models.DateTimeField()
     is_returned = models.BooleanField()
 
-class WhoUpload(models.Model):
-    file = models.FileField(
-        default="",
-        upload_to="books",
-        validators=[validate_book_extension],
-        verbose_name="books",
-    )
-    uploaded_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-
-    # def __str__(self):
-    #     return self.uploaded_by

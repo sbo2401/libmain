@@ -84,16 +84,9 @@ class Signup(forms.ModelForm):
 class Signin(forms.Form):
     username = forms.CharField(
         max_length=9,
-        widget=forms.TextInput(attrs={"placeholder": "Enter Your Userame"}),
+        widget=forms.TextInput(attrs={"class":"input100"}),
     )
     password = forms.CharField(
         max_length=255,
-        widget=forms.PasswordInput(
-            attrs={"placeholder": "Enter Your Password", "id": "password"}
-        ),
+        widget=forms.PasswordInput(attrs={"class":"input100"}),
     )
-
-class Upload(forms.ModelForm):
-    class Meta:
-        model = WhoUpload
-        exclude = ["uploaded_by"]

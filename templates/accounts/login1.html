@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogIn</title>
+</head>
+<body>
+    <div class="top">
+        <h3 id="welcome">Welcome</h3>
+        <p id="guide">Please fill the form below to login</p>
+    </div>
+    <div class="container">
+        <div class="login">SignIn</div>
+        <form action="/signin/" method="post">
+            {% csrf_token %}
+            <div class="user-details">
+                <div class="input-box">
+                    {{form.username}}
+                </div>
+                <div class="input-box" id="pass-box">
+                    <span class="eye" onclick="myFunction()">
+                        <i class="fa fa-eye" id="hide1"></i>
+                        <i class="fa fa-eye-slash" id="hide2"></i>
+                    </span>
+                    {{form.password}}
+                </div>
+                <div class="submit">
+                    <input type="submit" value="SignIn">
+                </div>
+                <div class="messages">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+                
+                <div class="signup">
+                    <span class="text-span">
+                        Don't have an account?
+                    </span>
+                    <a href="/signup/" class="signup-btn">SignUp</a>
+                </div>
+            </div>
+        </form>
+        
+    </div>
+   
+    
+</body>
+</html>

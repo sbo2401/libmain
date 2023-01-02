@@ -70,13 +70,13 @@ def signin(request):
                 get_user = User.objects.filter(username=username)
                 check_pass = check_password(password, get_user[0].password)
                 if not check_pass:
-                    messages.error(request, "You have entered an incorrect password")
+                    messages.error(request, "incorrect password")
                     return redirect(signin)
                 else:
                     login(request, get_user[0])
                     return redirect(index)
             else:
-                messages.error(request, "User does not exist")
+                messages.error(request, "Invalid User")
                 return redirect(signin)
     else:
         form = Signin()
