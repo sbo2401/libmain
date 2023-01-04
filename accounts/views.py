@@ -20,20 +20,22 @@ def index(request):
 
 def signup(request):
     if request.method == "POST":
-        form = Signup(request.POST, request.FILES)
+        form = Signup(request.POST)
         if form.is_valid():
             username = request.POST["username"]
+            first_name = request.POST["first_name"]
+            last_name = request.POST["last_name"]
             email = request.POST["email"]
             password = request.POST["password"]
             password2 = request.POST["password2"]
-            avatar = request.FILES["avatar"]
 
             if "@yahoo.com" or "@ymail.com" in email:
                 user = User.objects.create_user(
                     username=username,
+                    first_name=first_name,
+                    last_name=last_name,
                     password=password,
                     email=email,
-                    avatar=avatar
                     
                 )
                 user.save()
@@ -43,9 +45,10 @@ def signup(request):
             else:
                 user = User.objects.create_user(
                     username=username,
+                    first_name=first_name,
+                    last_name=last_name,
                     password=password,
                     email=email.lower(),
-                    avatar=avatar
                 )
                 user.save()
                 login(request, user)
@@ -165,13 +168,13 @@ def test(request):
 def test1(request):
     return render(request, "test1.html", {})
 
-def uploadedby(request):
+def borrow(request):
     if request.method == "POST":
-        form = Upload(request.POST, request.FILES)
+        form = Borrow(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect(index)
+            borrower = form.save(commit=False)
+            borrower.member = request.user
+            borrower.save()
     else:
-        form = Upload()
-    return render(request, "accounts/upload.html", {"form":form})
-
+        form = Borrow(initial={"library_no":request.user.library_no})
+    return render (request, "borrow.html", {"form":form})

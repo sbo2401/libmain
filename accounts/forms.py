@@ -41,19 +41,68 @@ class BookFile(BookInfo):
 class Signup(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["username", "email", "password", "password2", "avatar"]
+        fields = ["username", "email", "password", "password2", "library_no", "first_name", "last_name",]
         help_texts = {
             "username":None,
-            "avatar": "Max file size is 4MB"
         }
         labels = {
-            "avatar":"Profile Picture"
         }
         widgets = {
-            "avatar":forms.ClearableFileInput(attrs={"required":False}),
-            "username": forms.TextInput(),
-            "password": forms.PasswordInput(),
-            "password2": forms.PasswordInput(attrs={"required": True}),
+            "username": forms.TextInput(attrs={
+                "id":"input_46",
+                "name":"q46_typeA46",
+                "data-type":"input-textbox",
+                "class":"form-textbox validate[required]",
+                "size":"310",
+                "data-component":"textbox",
+                "aria-labelledby":"label_46"
+            }),
+            "first_name":forms.TextInput(attrs={
+                "id":"first_4",
+                "name":"q4_name[first]",
+                "class":"form-textbox validate[required]",
+                "autoComplete":"section-input_4 given-name",
+                "data-component":"first", 
+                "aria-labelledby":"label_4 sublabel_4_first", 
+                "required":True,
+            }),
+            "last_name":forms.TextInput(attrs={
+                "id":"last_4",
+                "name":"q4_name[last]", 
+                "class":"form-textbox validate[required]", 
+                "autoComplete":"section-input_4 family-name",  
+                "data-component":"last", 
+                "aria-labelledby":"label_4 sublabel_4_last", 
+                "required":True,
+            }),
+            "email":forms.EmailInput(attrs={
+                "id=":"input_10", 
+                "name":"q10_email10",
+                "class":"form-textbox validate[required, Email]", 
+                "placeholder":"ex: myname@example.com",
+                "data-component":"email", 
+                "aria-labelledby":"label_10 sublabel_input_10",
+                "required":True
+            }),
+            "password": forms.PasswordInput(attrs={
+                "id":"first_50", 
+                "name":"q50_name50[first]",
+                "class":"form-textbox",  
+                "autoComplete":"section-input_50 given-name",  
+                "data-component":"first", 
+                "aria-labelledby":"label_50 sublabel_50_first", 
+                "required":True
+            }),
+            "password2": forms.PasswordInput(attrs={
+                "id":"last_50", 
+                "name":"q50_name50[last]",
+                "class":"form-textbox", 
+                "autoComplete":"section-input_50 family-name",
+                "data-component":"last", 
+                "aria-labelledby":"label_50 sublabel_50_last",
+                "required": False
+            }),
+            "library_no": forms.TextInput(attrs={"required": False}),
         }
 
 
@@ -90,3 +139,11 @@ class Signin(forms.Form):
         max_length=255,
         widget=forms.PasswordInput(attrs={"class":"input100"}),
     )
+
+class Borrow(forms.ModelForm):
+    """
+    Borrow form
+    """
+    class Meta:
+        model = BorrowBook
+        exclude =  ["member",]

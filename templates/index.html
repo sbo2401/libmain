@@ -53,15 +53,17 @@
 
       <nav id="navbar" class="navbar order-last order-lg-0 header__menu">
         <ul>
-          <li><a href="/">Home</a></li>
           {% if request.user.is_superuser %}
             <li><a href="/admin">Admin</a></li>
           {% endif %}
-          <li><a href="#">Courses</a></li>
-          <li><a href="#">Trainers</a></li>
-          <li><a href="#">Events</a></li>
-          <li><a href="#">Pricing</a></li>
-          <li><a href="#">Contact</a></li>
+          {% if request.user.is_authenticated %}
+            <li><a href="/borrow/">Borrow Books</a></li>
+            <li><a href="#">Courses</a></li>
+            <li><a href="#">Trainers</a></li>
+            <li><a href="#">Events</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Contact</a></li>
+          {% endif %}
 
           <!-- <li class="dropdown"><a href=""><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
@@ -83,11 +85,13 @@
    
         {% if request.user.is_authenticated %}
           <div class="header__user">
-            <div class="avatar avatar--medium active">
-              <img src="{{request.user.avatar.url}}" />
-            </div>
-            <p>{{request.user.username}}</p>
-            <button class="dropdown-button" onclick="myFunction()">
+            <a href="{{request.user.avatar.url}}">
+              <div class="avatar avatar--medium active">
+                <img src="{{request.user.avatar.url}}" />
+              </div>
+            </a>
+            <!-- <p>{{request.user.username}}</p> -->
+            <button class="dropdown-button">
               <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                 <path d="M16 21l-13-13h-3l16 16 16-16h-3l-13 13z"></path>
               </svg>
@@ -96,7 +100,7 @@
         {% else %}
           <a href="/signin/">
             <img src="/media/avatar.svg" />
-              <p>Login</p>
+            <p>Login</p>
           </a>
         {% endif %}
         <div class="dropdown-menu">

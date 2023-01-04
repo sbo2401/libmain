@@ -7,7 +7,7 @@ def validate_pic_extension(value):
     from django.core.exceptions import ValidationError
 
     ext = os.path.splitext(value.name)[1]  # [0] returns path+filename
-    valid_extensions = [".jpg", ".png", ".jpeg"]
+    valid_extensions = [".jpg", ".png", ".jpeg", ".hiec"]
     if not ext.lower() in valid_extensions:
         raise ValidationError("Unsupported file extension.")
 
@@ -35,6 +35,7 @@ class User(AbstractUser):
         validators=[validate_pic_extension],
     )
     password2 = models.CharField(default="", max_length=128, verbose_name="Confirm Password", null=True, blank=True)
+    library_no = models.CharField(default="", max_length=15, blank=True)
 
     def __str__(self):
         return self.username
@@ -80,6 +81,10 @@ class Books(models.Model):
 class BorrowBook(models.Model):
     member = models.ForeignKey(User, on_delete=models.CASCADE, default="")
     book = models.ForeignKey(Books, on_delete=models.CASCADE, default="")
+    library_no = models.CharField(default="", max_length=15, blank=True)
+
+    def __str__(self):
+        return (str(self.member)) + " "+"applied to borrow " +(str(self.book))
 
 
 class BorrowedBook(models.Model):
