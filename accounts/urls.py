@@ -10,5 +10,6 @@ urlpatterns = [
     path("books/", views.books, name="book"),
     path("test/", views.test, name="test"),
     path("test1/", views.test1, name="test1"),
-    path("borrow/", views.borrow, name="borrow")
+    path("borrow/", views.borrow, name="borrow"),
+    path("profile/<int:pk>/", views.profile, name="profile")
 ]

@@ -26,7 +26,7 @@ def validate_book_extension(value):
 
 
 class User(AbstractUser):
-    username = models.CharField(max_length=9, default="", verbose_name="User Id", unique=True) 
+    username = models.CharField(max_length=9, default="", unique=True) 
     avatar = models.ImageField(
         blank=True,
         null=True,
@@ -36,6 +36,7 @@ class User(AbstractUser):
     )
     password2 = models.CharField(default="", max_length=128, verbose_name="Confirm Password", null=True, blank=True)
     library_no = models.CharField(default="", max_length=15, blank=True)
+    email = models.EmailField(default="", max_length=255, unique=True)
 
     def __str__(self):
         return self.username

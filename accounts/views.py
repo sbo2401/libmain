@@ -178,3 +178,8 @@ def borrow(request):
     else:
         form = Borrow(initial={"library_no":request.user.library_no})
     return render (request, "borrow.html", {"form":form})
+
+def profile(request, pk):
+    profile = User.objects.get(id=pk)
+    form = Profile(instance=profile)
+    return render(request, "accounts/profile.html", {"form":form})
