@@ -24,9 +24,18 @@ def validate_book_extension(value):
 
 # Create your models here
 
+DESIGNATION = (
+    ("Staff", "Staff"),
+    ("Student", "Student"),
+)
+
+LIBUSER = (
+    ("Yes", "Yes"),
+    ("No", "No"),
+)
 
 class User(AbstractUser):
-    username = models.CharField(max_length=9, default="", unique=True) 
+    username = models.CharField(max_length=9, default="", unique=True)
     avatar = models.ImageField(
         blank=True,
         null=True,
@@ -34,9 +43,20 @@ class User(AbstractUser):
         upload_to="images",
         validators=[validate_pic_extension],
     )
-    password2 = models.CharField(default="", max_length=128, verbose_name="Confirm Password", null=True, blank=True)
+    password2 = models.CharField(
+        default="",
+        max_length=128,
+        verbose_name="Confirm Password",
+        null=True,
+        blank=True,
+    )
     library_no = models.CharField(default="", max_length=15, blank=True)
     email = models.EmailField(default="", max_length=255, unique=True)
+    designation = models.CharField(default="", choices=DESIGNATION, max_length=255, null=True, blank=True)
+    staff_id = models.CharField(default="", max_length=255, null=True, blank=True, verbose_name="Staff Id")
+    matric_no = models.CharField(default="", max_length=255, null=True, blank=True, verbose_name="Matric Number")
+    lib_user = models.CharField(default="", max_length=255, choices=LIBUSER, null=True, blank=True, verbose_name="Library User")
+    library_id = models.CharField(default="", max_length=255, null=True, blank=True, verbose_name="Library Card Id")
 
     def __str__(self):
         return self.username
@@ -59,7 +79,7 @@ class Genre(models.Model):
     def __str__(self):
         return self.genres
 
- 
+
 class Books(models.Model):
     title = models.CharField(max_length=500, default="")
     author = models.CharField(max_length=500, default="")
@@ -79,13 +99,15 @@ class Books(models.Model):
 
     def __str__(self):
         return self.title
+
+
 class BorrowBook(models.Model):
     member = models.ForeignKey(User, on_delete=models.CASCADE, default="")
     book = models.ForeignKey(Books, on_delete=models.CASCADE, default="")
     library_no = models.CharField(default="", max_length=15, blank=True)
 
     def __str__(self):
-        return (str(self.member)) + " "+"applied to borrow " +(str(self.book))
+        return (str(self.member)) + " " + "applied to borrow " + (str(self.book))
 
 
 class BorrowedBook(models.Model):
@@ -95,3 +117,7 @@ class BorrowedBook(models.Model):
     return_date = models.DateTimeField()
     is_returned = models.BooleanField()
 
+
+
+class Idk(models.Model):
+    name = models.CharField(default="", max_length=128)

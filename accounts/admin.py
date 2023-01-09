@@ -30,4 +30,4 @@ admin.site.register(Catalog)
 admin.site.register(Collection)
 admin.site.register(BorrowedBook)
 admin.site.register(BorrowBook)
-
+admin.site.register(Idk)

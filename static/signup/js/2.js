@@ -3121,7 +3121,7 @@ var JotForm = {
     progressBar: false,
     forms: [],
     saveForm: false,
-    imageFiles: ["png", "jpg", "jpeg", "ico", "tiff", "bmp", "gif", "apng", "jp2", "jfif"],
+    imageFiles: ["png", "jpg", "jpeg",],
     autoCompletes: {},
     defaultValues: {},
     debug: false,
@@ -16769,38 +16769,38 @@ var JotForm = {
             referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
         }
 
-        function createImageEl(uuid) {
-            var base = 'https://events.jotform.com/';
-            if (typeof JotForm.enterprise !== "undefined" && JotForm.enterprise) {
-                base = 'https://' + JotForm.enterprise + '/events/';
-            }
-            if (self.jsForm) {
-                base = base + 'jsform/';
-            } else {
-                base = base + 'form/';
-            }
-            var src = base + _formID + '/';
-            var resolutionStr;
-            if (_screenHeight && _screenWidth) {
-                resolutionStr = _screenWidth + 'x' + _screenHeight;
-            }
-            src = src + '?ref=' + encodeURIComponent(_referer);
-            if (resolutionStr) {
-                src = src + '&res=' + encodeURIComponent(resolutionStr);
-            }
-            if (uuid) {
-                src = src + '&eventID=' + encodeURIComponent(uuid);
-            }
-            src = src + '&loc=' + encodeURIComponent(_location);
-            var img = new Image();
-            img.id = "event_tracking_image";
-            img.src = src;
-            img.alt = "jftr";
-            img.style.display = 'none';
-            img.width = 1;
-            img.height = 1;
-            return img;
-        }
+        // function createImageEl(uuid) {
+        //     var base = 'https://events.jotform.com/';
+        //     if (typeof JotForm.enterprise !== "undefined" && JotForm.enterprise) {
+        //         base = 'https://' + JotForm.enterprise + '/events/';
+        //     }
+        //     if (self.jsForm) {
+        //         base = base + 'jsform/';
+        //     } else {
+        //         base = base + 'form/';
+        //     }
+        //     var src = base + _formID + '/';
+        //     var resolutionStr;
+        //     if (_screenHeight && _screenWidth) {
+        //         resolutionStr = _screenWidth + 'x' + _screenHeight;
+        //     }
+        //     src = src + '?ref=' + encodeURIComponent(_referer);
+        //     if (resolutionStr) {
+        //         src = src + '&res=' + encodeURIComponent(resolutionStr);
+        //     }
+        //     if (uuid) {
+        //         src = src + '&eventID=' + encodeURIComponent(uuid);
+        //     }
+        //     src = src + '&loc=' + encodeURIComponent(_location);
+        //     var img = new Image();
+        //     img.id = "event_tracking_image";
+        //     img.src = src;
+        //     img.alt = "jftr";
+        //     img.style.display = 'none';
+        //     img.width = 1;
+        //     img.height = 1;
+        //     return img;
+        // }
 
         function createEventID(uuid) {
             var inputEl = document.createElement('input');

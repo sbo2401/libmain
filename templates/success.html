@@ -7,7 +7,14 @@
     <title>Success</title>
 </head>
 <body>
-    <h1>Thank You for Filling Out the Form</h1>
-    <p><a href="{% url 'updatedetails' pk %}">Click Here To Edit</a></p>
+   <form action="" method="post">
+    {%csrf_token%}
+    <p>
+        <label for="id_name">Name:</label>
+        <input type="text" name="name" maxlength="128" required id="id_name">    
+    </p>
+    <input type="submit" value="Submit">
+   </form>
 </body>
 </html>
+

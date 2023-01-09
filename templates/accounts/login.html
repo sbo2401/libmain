@@ -1,108 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>SignIn</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="/static/login/images/icons/favicon.ico"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/static/login/vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/static/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/static/login/fonts/iconic/css/material-design-iconic-font.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/static/login/vendor/animate/animate.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="/static/login/vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/static/login/vendor/animsition/css/animsition.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/static/login/vendor/select2/select2.min.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="/static/login/vendor/daterangepicker/daterangepicker.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/static/login/css/util.css">
-	<link rel="stylesheet" type="text/css" href="/static/login/css/main.css">
-<!--===============================================================================================-->
+<html class="supernova"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>SignIn</title>
+
+<link rel="stylesheet" href="/static/signup/css/1.css">
+<link rel="stylesheet" href="/static/signup/css/2.css">
+<link rel="stylesheet" href="/static/signup/css/3.css">
+<link rel="stylesheet" href="/static/signup/css/4.css">
+<link rel="stylesheet" href="/static/signup/css/5.css">
+<link rel="stylesheet" href="/static/signup/css/6.css">
+
+<script src="/static/signup/js/1.js"></script>
+<script src="/static/signup/js/2.js"></script>
+<script src="/static/signup/js/3.js"></script>
+<script src="/static/signup/js/4.js"></script>
+<script src="/static/signup/js/5.js"></script>
+<script src="/static/signup/js/6.js"></script>
 </head>
 <body>
-	<form action="/signin/" method="post">
-		{% csrf_token %}
-		<div class="limiter">
-			<div class="container-login100">
-				<div class="wrap-login100">
-					<form class="login100-form validate-form">
-						<span class="login100-form-title p-b-26">
-							Welcome
-						</span>
-						<span class="login100-form-title p-b-48">
-							<i class="zmdi zmdi-font"></i>
-						</span>
+<form class="jotform-form" action="/signin/" method="post" enctype="multipart/form-data" name="form_230023299150548" id="230023299150548" accept-charset="utf-8" autocomplete="on">
+  {% csrf_token %}
+  
+  <div role="main" class="form-all">
+    <ul class="form-section page-section">
+      <li id="cid_60" class="form-input-wide" data-type="control_head">
+        <div class="form-header-group  header-small">
+          <div class="header-text httal htvam">
+            <h3 id="header_60" class="form-header" data-component="header">SignIn</h3>
+          </div>
+        </div>
+      </li>
 
-						<div class="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c">
-							{{form.username}}
-							<span class="focus-input100" data-placeholder="Enter Username"></span>
-						</div>
+      <li class="form-line jf-required" data-type="control_textbox" id="id_64">
+        <label class="form-label form-label-left" id="label_64" for="input_64"> Username
+          <span class="form-required">*</span>
+        </label>
+        <div id="cid_64" class="form-input jf-required">
+          {{form.username}}
+        </div>
+      </li>
 
-						<div class="wrap-input100 validate-input" data-validate="Enter Password">
-							<span class="btn-show-pass">
-								<i class="zmdi zmdi-eye"></i>
-							</span>
-							{{form.password}}
-							<span class="focus-input100" data-placeholder="Enter Password"></span>
-						</div>
+      <li class="form-line jf-required" data-type="control_fullname" id="id_66">
+        <label class="form-label form-label-left form-label-auto" id="label_66" for="first_66">Password
+          <span class="form-required">*</span>
+        </label>
+        <div id="cid_66" class="form-input jf-required">
+          <div data-wrapper-react="true">
+            <span class="form-sub-label-container" style="vertical-align:top" data-input-type="first">
+              {{form.password}}
+            </span>
+        </div>
+      </li>
 
-						<div class="container-login100-form-btn">
-							<div class="wrap-login100-form-btn">
-								<div class="login100-form-bgbtn"></div>
-								<button class="login100-form-btn">
-									Login
-								</button>
-							</div>
-						</div>
-
-						<div class="messages">
-							{% for message in messages %}
-								<p>{{ message }}</p>
-							{% endfor %}
-						</div>
-						
-						<div class="text-center p-t-115">
-							<span class="txt1">
-								Don’t have an account?
-							</span>
-
-							<a class="txt2" href="/signup/">
-								Sign Up
-							</a>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</form>
-	
-
-	<div id="dropDownSelect1"></div>
-	
-<!--===============================================================================================-->
-	<script src="/static/login/vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-	<script src="/static/login/vendor/animsition/js/animsition.min.js"></script>
-<!--===============================================================================================-->
-	<script src="/static/login/vendor/bootstrap/js/popper.js"></script>
-	<script src="/static/login/vendor/bootstrap/js/bootstrap.min.js"></script>
-<!--===============================================================================================-->
-	<script src="/static/login/vendor/select2/select2.min.js"></script>
-<!--===============================================================================================-->
-	<script src="/static/login/vendor/daterangepicker/moment.min.js"></script>
-	<script src="/static/login/vendor/daterangepicker/daterangepicker.js"></script>
-<!--===============================================================================================-->
-	<script src="/static/login/vendor/countdowntime/countdowntime.js"></script>
-<!--===============================================================================================-->
-	<script src="/static/login/js/main.js"></script>
-
+      <li class="form-line" data-type="control_button" id="id_76">
+        <div id="cid_76" class="form-input-wide">
+          <div data-align="center" class="form-buttons-wrapper form-buttons-center   jsTest-button-wrapperField"><button id="input_76" type="submit" class="form-submit-button submit-button jf-form-buttons jsTest-submitField" data-component="button" data-content="">Submit</button></div>
+        </div>
+      </li>
+    </ul>
+  </div>/
+  
+  <!-- <div class="formFooter-heightMask"></div>
+  <div class="formFooter f6 branding21"></div> -->
+</form>
 </body>
 </html>

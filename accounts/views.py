@@ -36,11 +36,12 @@ def signup(request):
                     last_name=last_name,
                     password=password,
                     email=email,
-                    
                 )
                 user.save()
                 login(request, user)
-                messages.success(request, "Account Created successfully for " + username)
+                messages.success(
+                    request, "Account Created successfully for " + username
+                )
                 return redirect(index)
             else:
                 user = User.objects.create_user(
@@ -52,7 +53,9 @@ def signup(request):
                 )
                 user.save()
                 login(request, user)
-                messages.success(request, "Account Created successfully for " + username)
+                messages.success(
+                    request, "Account Created successfully for " + username
+                )
                 return redirect(index)
     else:
         form = Signup()
@@ -168,6 +171,7 @@ def test(request):
 def test1(request):
     return render(request, "test1.html", {})
 
+
 def borrow(request):
     if request.method == "POST":
         form = Borrow(request.POST)
@@ -176,10 +180,21 @@ def borrow(request):
             borrower.member = request.user
             borrower.save()
     else:
-        form = Borrow(initial={"library_no":request.user.library_no})
-    return render (request, "borrow.html", {"form":form})
+        form = Borrow(initial={"library_no": request.user.library_no})
+    return render(request, "borrow.html", {"form": form})
+
 
 def profile(request, pk):
     profile = User.objects.get(id=pk)
     form = Profile(instance=profile)
-    return render(request, "accounts/profile.html", {"form":form})
+    return render(request, "accounts/profile.html", {"form": form})
+
+def idk(request):
+    if request.method == "POST":
+        name = request.POST["name"]
+        ab = Idk.objects.create(name=name)
+        ab.save()
+        
+        # return redirect(index)
+    
+    return render (request, "success.html")

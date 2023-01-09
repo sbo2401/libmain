@@ -11,5 +11,6 @@ urlpatterns = [
     path("test/", views.test, name="test"),
     path("test1/", views.test1, name="test1"),
     path("borrow/", views.borrow, name="borrow"),
-    path("profile/<int:pk>/", views.profile, name="profile")
+    path("profile/<int:pk>/", views.profile, name="profile"),
+    path("idk/", views.idk, name="idk")
 ]
