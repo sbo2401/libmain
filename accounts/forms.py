@@ -48,7 +48,6 @@ class Signup(forms.ModelForm):
             "email",
             "password",
             "password2",
-            "library_no",
             "first_name",
             "last_name",
         ]
@@ -219,8 +218,133 @@ class Profile(forms.ModelForm):
             "email",
             "first_name",
             "last_name",
-            
+            "avatar",
+            "staff_id",
+            "matric_no",
+            "library_id",
+            "designation",
+            "lib_user",
         ]
+        widgets = {
+            "username": forms.TextInput(
+                attrs={
+                    "id": "input_64",
+                    "name": "q64_typeA",
+                    "data-type": "input-textbox",
+                    "class": "form-textbox validate[required]",
+                    "data-defaultvalue": "",
+                    "size": "20",
+                    "value": "",
+                    "placeholder": "180591001",
+                    "data-component": "textbox",
+                    "aria-labelledby": "label_64",
+                    "required": True,
+                    "readonly": True,
+                }
+            ),
+            "email": forms.EmailInput(
+                attrs={
+                    "id": "input_67",
+                    "name": "q67_email",
+                    "class": "form-textbox validate[required, Email]",
+                    "data-defaultvalue": "",
+                    "size": "30",
+                    "value": "",
+                    "data-component": "email",
+                    "aria-labelledby": "label_67",
+                    "required": True,
+                    "placeholder": "ex@example.com",
+                }
+            ),
+            "first_name": forms.TextInput(
+                attrs={
+                    "id": "first_65",
+                    "name": "q65_name[first]",
+                    "class": "form-textbox validate[required]",
+                    "data-defaultvalue": "",
+                    "autoComplete": "section-input_65 given-name",
+                    "size": "10",
+                    "value": "",
+                    "data-component": "first",
+                    "aria-labelledby": "label_65 sublabel_65_first",
+                    "required": True,
+                    "placeholder": "Chinedu",
+                }
+            ),
+            "last_name": forms.TextInput(
+                attrs={
+                    "id": "first_65",
+                    "name": "q65_name[first]",
+                    "class": "form-textbox validate[required]",
+                    "data-defaultvalue": "",
+                    "autoComplete": "section-input_65 given-name",
+                    "size": "10",
+                    "value": "",
+                    "data-component": "first",
+                    "aria-labelledby": "label_65 sublabel_65_first",
+                    "required": True,
+                    "placeholder": "Oladapo Dikko",
+                }
+            ),
+            "avatar": forms.ClearableFileInput(attrs={}),
+            "staff_id": forms.TextInput(
+                attrs={
+                    "id": "input_73",
+                    "name": "q73_typeA73",
+                    "data-type": "input-textbox",
+                    "class": "form-textbox validate[required]",
+                    "data-defaultvalue": "",
+                    "size": "20",
+                    "value": "",
+                    "data-component": "textbox",
+                    "aria-labelledby": "label_73",
+                    "required": True,
+                }
+            ),
+            "matric_no": forms.TextInput(
+                attrs={
+                    "id": "input_80",
+                    "name": "q80_typeA80",
+                    "data-type": "input-textbox",
+                    "class": "form-textbox validate[required]",
+                    "data-defaultvalue": "",
+                    "size": "20",
+                    "value": "",
+                    "data-component": "textbox",
+                    "aria-labelledby": "label_80",
+                    "required": True,
+                }
+            ),
+            "library_id": forms.TextInput(
+                attrs={
+                    "id": "input_74",
+                    "name": "q74_typeA74",
+                    "data-type": "input-textbox",
+                    "class": "form-textbox validate[required]",
+                    "data-defaultvalue": "",
+                    "size": "20",
+                    "value": "",
+                    "data-component": "textbox",
+                    "aria-labelledby": "label_74",
+                    "required": True,
+                }
+            ),
+            "designation": forms.RadioSelect(attrs={
+                "id":"label_68",
+                "class":"form-radio validate[required]",
+                "required":"", 
+                "name":"q68_typeA68",
+                "onclick":"myFunction(0)",
+            }),
+            "lib_user":forms.RadioSelect(attrs={
+                "id":"label_70",
+                "class":"form-radio validate[required]",
+                "aria-describedby":"label_70",
+                "name":"q70_typeA70",
+                "onclick":"myFunction1(0)"
+            })
+        }
+
 
 class Borrow(forms.ModelForm):
     """
@@ -232,7 +356,10 @@ class Borrow(forms.ModelForm):
         exclude = [
             "member",
         ]
-class Idkk(forms.ModelForm):
+
+
+class FileUpload(forms.ModelForm):
     class Meta:
-        model = Idk
-        fields = "__all__"
+        model = Student
+        fields = ["files"]
+        widgets = {"files": forms.ClearableFileInput(attrs={"multiple": True})}

@@ -189,12 +189,26 @@ def profile(request, pk):
     form = Profile(instance=profile)
     return render(request, "accounts/profile.html", {"form": form})
 
+
 def idk(request):
     if request.method == "POST":
         name = request.POST["name"]
         ab = Idk.objects.create(name=name)
         ab.save()
-        
+
         # return redirect(index)
-    
-    return render (request, "success.html")
+
+    return render(request, "success.html")
+
+
+def upload(request):
+    if request.method == "POST":
+        form = FileUpload(request.POST, request.FILES)
+        file = request.FILES.getlist("files")
+        if form.is_valid():
+            if file:
+                for f in file:
+                    Student.objects.create(files=f)
+    else:
+        form = FileUpload()
+    return render(request, "file.html", {"form": form})

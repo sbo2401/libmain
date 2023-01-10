@@ -34,6 +34,7 @@ LIBUSER = (
     ("No", "No"),
 )
 
+
 class User(AbstractUser):
     username = models.CharField(max_length=9, default="", unique=True)
     avatar = models.ImageField(
@@ -50,13 +51,31 @@ class User(AbstractUser):
         null=True,
         blank=True,
     )
-    library_no = models.CharField(default="", max_length=15, blank=True)
     email = models.EmailField(default="", max_length=255, unique=True)
-    designation = models.CharField(default="", choices=DESIGNATION, max_length=255, null=True, blank=True)
-    staff_id = models.CharField(default="", max_length=255, null=True, blank=True, verbose_name="Staff Id")
-    matric_no = models.CharField(default="", max_length=255, null=True, blank=True, verbose_name="Matric Number")
-    lib_user = models.CharField(default="", max_length=255, choices=LIBUSER, null=True, blank=True, verbose_name="Library User")
-    library_id = models.CharField(default="", max_length=255, null=True, blank=True, verbose_name="Library Card Id")
+    designation = models.CharField(
+        default="", choices=DESIGNATION, max_length=255, null=True, blank=True
+    )
+    staff_id = models.CharField(
+        default="", max_length=255, null=True, blank=True, verbose_name="Staff Id"
+    )
+    matric_no = models.CharField(
+        default="", max_length=255, null=True, blank=True, verbose_name="Matric Number"
+    )
+    lib_user = models.CharField(
+        default="",
+        max_length=255,
+        choices=LIBUSER,
+        null=True,
+        blank=True,
+        verbose_name="Library User",
+    )
+    library_id = models.CharField(
+        default="",
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name="Library Card Id",
+    )
 
     def __str__(self):
         return self.username
@@ -118,6 +137,11 @@ class BorrowedBook(models.Model):
     is_returned = models.BooleanField()
 
 
-
 class Idk(models.Model):
     name = models.CharField(default="", max_length=128)
+
+
+class Student(models.Model):
+    # name = models.CharField(max_length=255, null=True, blank=True)
+    # codePerm = models.CharField(max_length=200, null=True, blank=True)
+    files = models.FileField(upload_to="files", blank=True, null=True)

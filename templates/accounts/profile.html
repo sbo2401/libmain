@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="supernova"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Signup Form</title>
+<title>Profile</title>
 
 <link rel="stylesheet" href="/static/signup/css/1.css">
 <link rel="stylesheet" href="/static/signup/css/2.css">
@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="/static/signup/css/4.css">
 <link rel="stylesheet" href="/static/signup/css/5.css">
 <link rel="stylesheet" href="/static/signup/css/6.css">
+<link rel="stylesheet" href="/static/signup/css/main.css">
 
 {% comment %} <script src="/static/signup/js/1.js"></script>
 <script src="/static/signup/js/2.js"></script>
@@ -27,7 +28,7 @@
       <li id="cid_60" class="form-input-wide" data-type="control_head">
         <div class="form-header-group  header-small">
           <div class="header-text httal htvam">
-            <h3 id="header_60" class="form-header" data-component="header">SignUp</h3>
+            <h3 id="header_60" class="form-header" data-component="header">Profile</h3>
           </div>
         </div>
       </li>
@@ -37,7 +38,7 @@
           <span class="form-required">*</span>
         </label>
         <div id="cid_64" class="form-input jf-required">
-          <input type="text" id="input_64" name="q64_typeA" data-type="input-textbox" class="form-textbox validate[required]" data-defaultvalue="" size="20" value="" placeholder="180591001" data-component="textbox" aria-labelledby="label_64" required="" />
+          {{form.username}}
         </div>
       </li>
 
@@ -48,7 +49,7 @@
         <div id="cid_65" class="form-input jf-required">
           <div data-wrapper-react="true">
             <span class="form-sub-label-container" style="vertical-align:top" data-input-type="first">
-              <input type="text" id="first_65" name="q65_name[first]" class="form-textbox validate[required]" data-defaultvalue="" autoComplete="section-input_65 given-name" size="10" value="" data-component="first" aria-labelledby="label_65 sublabel_65_first" required=""/>
+              {{form.first_name}}
             </span>
         </div>
       </li>
@@ -60,7 +61,7 @@
         <div id="cid_65" class="form-input jf-required">
           <div data-wrapper-react="true">
             <span class="form-sub-label-container" style="vertical-align:top" data-input-type="first">
-              <input type="text" id="first_65" name="q65_name[first]" class="form-textbox validate[required]" data-defaultvalue="" autoComplete="section-input_65 given-name" size="10" value="" data-component="first" aria-labelledby="label_65 sublabel_65_first" required=""/>
+              {{form.last_name}}
             </span>
         </div>
       </li>
@@ -70,7 +71,7 @@
           <span class="form-required">*</span>
         </label>
         <div id="cid_67" class="form-input jf-required">
-          <input type="email" id="input_67" name="q67_email" class="form-textbox validate[required, Email]" data-defaultvalue="" size="30" value="" data-component="email" aria-labelledby="label_67" required="" />
+          {{form.email}}
         </div>
       </li>
 
@@ -78,22 +79,17 @@
         <label class="form-label form-label-left form-label-auto" id="label_68" for="input_68">Designation
           <span class="form-required">*</span>
         </label>
-
         <div id="cid_68" class="form-input jf-required">
           <div class="form-multiple-column" data-columncount="2" role="group" aria-labelledby="label_68" data-component="radio">
-            <span class="form-radio-item" >
+            {% for choice in form.designation %}
+            <span class="form-radio-item" id="span_{{forloop.counter0}}">
               <span class="dragger-item"></span>
-              <input type="radio" aria-describedby="label_68" class="form-radio validate[required]" id="input_68_0" name="q68_typeA68" value="staff" required="" onclick="myFunction(0)"/>
-              <label id="label_input_68_0" for="input_68_0">Staff</label>
+                {{choice.tag}}
+                <label for="designation_{{ forloop.counter0 }}" id="label_68_{{ forloop.counter0 }}">{{choice.choice_label}}</label>
             </span>
-
-            <span class="form-radio-item">
-              <span class="dragger-item"></span>
-              <input type="radio" aria-describedby="label_68" class="form-radio validate[required]" id="input_68_1" name="q68_typeA68" value="student" required="" onclick="myFunction(1)"/>
-              <label id="label_input_68_1" for="input_68_1">Student</label>
-            </span>
-          </div>
-        </div>
+            {% endfor %}
+          </div> 
+        </div>     
       </li>
 
       <li class="form-line jf-required" data-type="control_textbox" id="id_73" style="display:none;">
@@ -101,7 +97,7 @@
           <span class="form-required">*</span>
         </label>
         <div id="cid_73" class="form-input jf-required">
-          <input type="text" id="input_73" name="q73_typeA73" data-type="input-textbox" class="form-textbox validate[required]" data-defaultvalue="" size="20" value="" data-component="textbox" aria-labelledby="label_73" required=""/>
+          {{form.staff_id}}
         </div>
       </li>
 
@@ -110,28 +106,23 @@
           <span class="form-required">*</span>
         </label>
         <div id="cid_80" class="form-input jf-required">
-          <input type="text" id="input_80" name="q80_typeA80" data-type="input-textbox" class="form-textbox validate[required]" data-defaultvalue="" size="20" value="" data-component="textbox" aria-labelledby="label_80" required=""/>
+          {{form.matric_no}}
         </div>
       </li>
 
-      <li class="form-line jf-required" data-type="control_radio" id="id_70" style="display: none;">
+      <li class="form-line jf-required" data-type="control_radio" id="id_70">
         <label class="form-label form-label-left form-label-auto" id="label_70" for="input_70">Library User?
           <span class="form-required">*</span>
         </label>
         <div id="cid_70" class="form-input jf-required">
           <div class="form-multiple-column" data-columncount="2" role="group" aria-labelledby="label_70" data-component="radio">
-
-            <span class="form-radio-item">
+            {% for choice in form.lib_user %}
+            <span class="form-radio-item" id="span_{{forloop.counter0}}">
               <span class="dragger-item"></span>
-              <input type="radio" aria-describedby="label_70" class="form-radio validate[required]" id="input_70_0" name="q70_typeA70" value="yes" required="" onclick="myFunction1(0)"/>
-              <label id="label_input_70_0" for="input_70_0">Yes</label>
+                {{choice.tag}}
+              <label for="designation_{{ forloop.counter0 }}" id="label_70_{{ forloop.counter0 }}">{{choice.choice_label}}</label>
             </span>
-
-            <span class="form-radio-item">
-              <span class="dragger-item"></span>
-              <input type="radio" aria-describedby="label_70" class="form-radio validate[required]" id="input_70_1" name="q70_typeA70" value="No" required="" onclick="myFunction1(1)"/>
-              <label id="label_input_70_1" for="input_70_1">No</label>
-            </span>
+            {% endfor %}
           </div>
         </div>
       </li>
@@ -141,11 +132,9 @@
           <span class="form-required">*</span>
         </label>
         <div id="cid_74" class="form-input jf-required">
-          <input type="text" id="input_74" name="q74_typeA74" data-type="input-textbox" class="form-textbox validate[required]" data-defaultvalue="" size="20" value="" data-component="textbox" aria-labelledby="label_74" required=""/>
+          {{form.library_id}}
         </div>
       </li>
-
-      </script>
 
       <li class="form-line jf-required" data-type="control_fileupload" id="id_75"><label class="form-label form-label-left form-label-auto" id="label_75" for="input_75"> File Upload </label>
         <div id="cid_75" class="form-input jf-required">
@@ -170,3 +159,5 @@
   <div class="formFooter f6 branding21"></div>
 </form></body>
 </html>
+
+

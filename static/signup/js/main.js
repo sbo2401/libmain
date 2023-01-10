@@ -54,3 +54,5 @@ function myFunction1(x){
     document.getElementById("id_74").style.display = "none";
   }
 }
+
+document.getElementById("span_0").style.display = "hidden";
